@@ -2,11 +2,13 @@ package com.javacompressor.compression;
 
 /**
  * Enum representing the available compression algorithms.
+ * Each algorithm has its own characteristics in terms of compression ratio,
+ * speed, and compatibility with different systems.
  */
 public enum CompressionAlgorithm {
-    ZIP("zip", "ZIP", "zip"),
-    GZIP("gz", "GZIP", "gz"),
-    BZIP2("bz2", "BZIP2", "bz2");
+    ZIP("zip", "ZIP (Standard)", "zip"),
+    GZIP("gz", "GZIP (Fast)", "gz"),
+    BZIP2("bz2", "BZIP2 (High Compression)", "bz2");
     
     private final String extension;
     private final String displayName;
