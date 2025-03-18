@@ -19,8 +19,13 @@ public class FileUtils {
     
     // Set of common compressed file extensions
     private static final Set<String> COMPRESSED_EXTENSIONS = new HashSet<>(Arrays.asList(
-        "zip", "gz", "gzip", "bz2", "bzip2", "tar.gz", "tgz", "tar.bz2", "tbz2", 
-        "7z", "rar", "xz", "lzma", "lz", "lzo", "z", "arj", "cab", "jar"
+        "zip", "gz", "gzip", "bz2", "bzip2", "tar.gz", "tgz", "tar.bz2", "tbz2",
+        "7z", "rar", "jar", "war", "xz", "lzma", "lz", "z"
+    ));
+    
+    // Extensions supported by our compressor
+    private static final Set<String> SUPPORTED_COMPRESS_EXTENSIONS = new HashSet<>(Arrays.asList(
+        "zip", "gz", "bz2"
     ));
     
     /**
@@ -132,6 +137,69 @@ public class FileUtils {
     }
     
     /**
+     * Checks if a file is compressible by our application.
+     * Some file formats are already highly compressed (images, videos, etc.)
+     * and don't benefit much from additional compression.
+     * 
+     * @param file The file to check
+     * @return true if the file is likely to benefit from compression
+     */
+    public static boolean isCompressibleFile(File file) {
+        if (file == null || !file.isFile()) {
+            return true; // Directories are always compressible
+        }
+        
+        String ext = getExtension(file).toLowerCase();
+        
+        // List of extensions that are typically already compressed
+        Set<String> alreadyCompressedTypes = new HashSet<>(Arrays.asList(
+            // Images
+            "jpg", "jpeg", "png", "gif", "webp", "bmp", "tiff", "heic",
+            // Audio
+            "mp3", "aac", "ogg", "flac", "wav",
+            // Video
+            "mp4", "avi", "mkv", "mov", "webm", "flv",
+            // Archives (already compressed)
+            "zip", "rar", "7z", "gz", "bz2", "tar", "tgz"
+        ));
+        
+        return !alreadyCompressedTypes.contains(ext);
+    }
+    
+    /**
+     * Gets the file extension without the dot.
+     * 
+     * @param file The file
+     * @return The extension or empty string if none
+     */
+    public static String getExtension(File file) {
+        String name = file.getName();
+        int lastDotIndex = name.lastIndexOf('.');
+        
+        if (lastDotIndex > 0 && lastDotIndex < name.length() - 1) {
+            return name.substring(lastDotIndex + 1);
+        }
+        
+        return "";
+    }
+    
+    /**
+     * Determines if a compression algorithm is supported for the given file.
+     * 
+     * @param file The file to check
+     * @param algorithm The algorithm to check
+     * @return true if the file can be compressed with the algorithm
+     */
+    public static boolean isSupportedForCompression(File file, CompressionAlgorithm algorithm) {
+        // Directories can only be compressed with ZIP
+        if (file.isDirectory() && algorithm != CompressionAlgorithm.ZIP) {
+            return false;
+        }
+        
+        return true;
+    }
+    
+    /**
      * Determines the compression algorithm for a compressed file based on its extension.
      * 
      * @param file The compressed file
@@ -144,7 +212,7 @@ public class FileUtils {
         
         String name = file.getName().toLowerCase();
         
-        if (name.endsWith(".zip") || name.endsWith(".jar")) {
+        if (name.endsWith(".zip") || name.endsWith(".jar") || name.endsWith(".war")) {
             return CompressionAlgorithm.ZIP;
         } else if (name.endsWith(".gz") || name.endsWith(".gzip") || name.endsWith(".tgz") || name.endsWith(".tar.gz")) {
             return CompressionAlgorithm.GZIP;
@@ -172,7 +240,9 @@ public class FileUtils {
         String baseName = fileName;
         
         // Handle different compression formats
-        if (fileName.toLowerCase().endsWith(".zip") || fileName.toLowerCase().endsWith(".jar")) {
+        if (fileName.toLowerCase().endsWith(".zip") || 
+            fileName.toLowerCase().endsWith(".jar") || 
+            fileName.toLowerCase().endsWith(".war")) {
             baseName = fileName.substring(0, fileName.lastIndexOf('.'));
         } else if (fileName.toLowerCase().endsWith(".gz") || fileName.toLowerCase().endsWith(".gzip")) {
             baseName = fileName.substring(0, fileName.lastIndexOf('.'));
@@ -191,7 +261,9 @@ public class FileUtils {
         }
         
         // If it's a ZIP file, we'll decompress to a directory
-        if (fileName.toLowerCase().endsWith(".zip") || fileName.toLowerCase().endsWith(".jar")) {
+        if (fileName.toLowerCase().endsWith(".zip") || 
+            fileName.toLowerCase().endsWith(".jar") || 
+            fileName.toLowerCase().endsWith(".war")) {
             return (parentPath != null ? parentPath + File.separator : "") + baseName;
         } else {
             // For GZIP and BZIP2, we'll decompress to a file
