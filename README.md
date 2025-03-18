@@ -1,6 +1,6 @@
 # Java File Compressor
 
-A desktop app I built to compress and decompress files with various algorithms. Super simple to use!
+A desktop app designed to compress and decompress files with various algorithms. Super simple to use!
 
 ![Java File Compressor](docs/images/screenshot.png)
 
@@ -62,6 +62,8 @@ The app uses a pretty standard architecture:
 - **Controller:** Handles what happens when you click things
 - **Service:** Background work for compression/decompression
 
+See the detailed [class diagram](docs/class-diagram.md) for a visual representation of how everything fits together.
+
 ### Algorithm Details
 
 - **ZIP:** Classic format everyone knows - good compatibility
@@ -104,7 +106,7 @@ The trickiest parts were calculating accurate file sizes for nested directories 
 
 This project is under the MIT License - see the LICENSE file for details.
 
-## Thanks to
+## Built with
 
 - Apache Commons Compress for the compression algorithms
 - JavaFX team for the UI framework
