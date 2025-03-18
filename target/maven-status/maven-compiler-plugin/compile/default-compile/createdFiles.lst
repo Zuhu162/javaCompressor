@@ -1,0 +1,9 @@
+com\javacompressor\Launcher.class
+com\javacompressor\model\FileInfo.class
+com\javacompressor\compression\CompressionTask.class
+com\javacompressor\Main.class
+com\javacompressor\MainController.class
+com\javacompressor\compression\CompressionService.class
+com\javacompressor\compression\CompressionService$1.class
+com\javacompressor\util\FileUtils.class
+com\javacompressor\compression\CompressionAlgorithm.class

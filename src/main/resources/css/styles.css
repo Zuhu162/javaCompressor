@@ -1,0 +1,135 @@
+/* Main Application Styles */
+.main-container {
+  -fx-background-color: #f5f5f5;
+}
+
+/* Title Styles */
+.title-label {
+  -fx-text-fill: #2c3e50;
+}
+
+/* Drop Zone Styles */
+.drop-zone {
+  -fx-border-color: #ddd;
+  -fx-border-width: 2;
+  -fx-border-style: dashed;
+  -fx-border-radius: 5;
+  -fx-background-color: white;
+}
+
+/* Section Styles */
+.section-header {
+  -fx-text-fill: #3498db;
+  -fx-padding: 5 0 5 0;
+}
+
+.info-section,
+.options-section,
+.progress-section,
+.results-section {
+  -fx-background-color: white;
+  -fx-background-radius: 5;
+  -fx-border-color: #eee;
+  -fx-border-radius: 5;
+  -fx-padding: 10;
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0, 0, 1);
+}
+
+/* Label Styles */
+.info-label,
+.option-label {
+  -fx-font-weight: bold;
+}
+
+/* Button Styles */
+.button {
+  -fx-background-color: #3498db;
+  -fx-text-fill: white;
+  -fx-background-radius: 5;
+  -fx-cursor: hand;
+}
+
+.button:hover {
+  -fx-background-color: #2980b9;
+}
+
+.button:pressed {
+  -fx-background-color: #1c6ea4;
+}
+
+.button:disabled {
+  -fx-background-color: #95a5a6;
+  -fx-opacity: 0.7;
+}
+
+#selectFileButton {
+  -fx-background-color: #2ecc71;
+}
+
+#selectFileButton:hover {
+  -fx-background-color: #27ae60;
+}
+
+#selectFileButton:pressed {
+  -fx-background-color: #219653;
+}
+
+#compressButton {
+  -fx-background-color: #3498db;
+}
+
+#decompressButton {
+  -fx-background-color: #9b59b6;
+}
+
+#decompressButton:hover {
+  -fx-background-color: #8e44ad;
+}
+
+#decompressButton:pressed {
+  -fx-background-color: #6c3483;
+}
+
+#cancelButton {
+  -fx-background-color: #e74c3c;
+}
+
+#cancelButton:hover {
+  -fx-background-color: #c0392b;
+}
+
+#cancelButton:pressed {
+  -fx-background-color: #a33025;
+}
+
+/* Progress Bar Styles */
+.progress-bar {
+  -fx-accent: #3498db;
+}
+
+.progress-bar .track {
+  -fx-background-color: #ecf0f1;
+}
+
+/* Slider Styles */
+.slider .track {
+  -fx-background-color: #ecf0f1;
+}
+
+.slider .thumb {
+  -fx-background-color: #3498db;
+}
+
+/* ComboBox Styles */
+.combo-box {
+  -fx-background-color: white;
+  -fx-border-color: #ddd;
+  -fx-border-radius: 5;
+}
+
+/* TextArea Styles */
+.text-area {
+  -fx-background-color: #f8f9fa;
+  -fx-border-color: #ddd;
+  -fx-border-radius: 5;
+}

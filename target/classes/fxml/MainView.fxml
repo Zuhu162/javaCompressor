@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" 
+           fx:controller="com.javacompressor.MainController"
+           styleClass="main-container">
+  
+  <top>
+    <VBox spacing="10" alignment="CENTER">
+      <padding>
+        <Insets top="20" right="20" bottom="10" left="20" />
+      </padding>
+      <Label text="Java File Compressor" styleClass="title-label">
+        <font>
+          <Font name="System Bold" size="24.0" />
+        </font>
+      </Label>
+    </VBox>
+  </top>
+  
+  <center>
+    <VBox spacing="20" alignment="CENTER" fx:id="dropZone" styleClass="drop-zone">
+      <padding>
+        <Insets top="20" right="20" bottom="20" left="20" />
+      </padding>
+      
+      <!-- File Information Section -->
+      <VBox spacing="10" styleClass="info-section">
+        <Label text="File Information" styleClass="section-header">
+          <font>
+            <Font name="System Bold" size="14.0" />
+          </font>
+        </Label>
+        <GridPane hgap="10" vgap="5">
+          <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="400.0" />
+          </columnConstraints>
+          <rowConstraints>
+            <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          </rowConstraints>
+          <Label text="File Name:" styleClass="info-label" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+          <Label fx:id="fileNameLabel" text="No file selected" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+          <Label text="File Size:" styleClass="info-label" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+          <Label fx:id="fileSizeLabel" text="" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+          <Label text="File Type:" styleClass="info-label" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+          <Label fx:id="fileTypeLabel" text="" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+        </GridPane>
+      </VBox>
+      
+      <!-- Compression Options Section -->
+      <VBox spacing="10" styleClass="options-section">
+        <Label text="Compression Options" styleClass="section-header">
+          <font>
+            <Font name="System Bold" size="14.0" />
+          </font>
+        </Label>
+        <GridPane hgap="10" vgap="10">
+          <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="400.0" />
+          </columnConstraints>
+          <rowConstraints>
+            <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          </rowConstraints>
+          <Label text="Algorithm:" styleClass="option-label" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+          <ComboBox fx:id="algorithmComboBox" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+          
+          <Label text="Compression Level:" styleClass="option-label" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+          <VBox spacing="5" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Slider fx:id="compressionLevelSlider" min="1" max="9" value="5" majorTickUnit="1" minorTickCount="0" 
+                   showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+            <Label fx:id="compressionLevelLabel" text="Compression Level: 5" />
+          </VBox>
+          
+          <Label text="Options:" styleClass="option-label" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+          <CheckBox fx:id="preserveStructureCheckbox" text="Preserve directory structure" 
+                   selected="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+        </GridPane>
+      </VBox>
+      
+      <!-- Progress and Status Section -->
+      <VBox spacing="10" styleClass="progress-section">
+        <ProgressBar fx:id="progressBar" prefWidth="Infinity" progress="0.0" />
+        <Label fx:id="statusLabel" text="Ready" alignment="CENTER" />
+      </VBox>
+      
+      <!-- Results Section -->
+      <VBox spacing="10" styleClass="results-section">
+        <Label text="Compression Statistics" styleClass="section-header">
+          <font>
+            <Font name="System Bold" size="14.0" />
+          </font>
+        </Label>
+        <TextArea fx:id="compressionStatsArea" prefHeight="100.0" editable="false" wrapText="true" />
+      </VBox>
+    </VBox>
+  </center>
+  
+  <bottom>
+    <HBox spacing="10" alignment="CENTER" styleClass="button-container">
+      <padding>
+        <Insets top="10" right="20" bottom="20" left="20" />
+      </padding>
+      <Button fx:id="selectFileButton" text="Select File" prefWidth="120" />
+      <Button fx:id="compressButton" text="Compress" prefWidth="120" disable="true" />
+      <Button fx:id="decompressButton" text="Decompress" prefWidth="120" disable="true" />
+      <Button fx:id="cancelButton" text="Cancel" prefWidth="120" disable="true" />
+    </HBox>
+  </bottom>
+  
+</BorderPane> 
