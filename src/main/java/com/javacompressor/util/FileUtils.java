@@ -12,27 +12,25 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Utility class for file operations.
+ * Utility methods for working with files
  */
 public class FileUtils {
     private static final Logger logger = LoggerFactory.getLogger(FileUtils.class);
     
-    // Set of common compressed file extensions
+    // These are the extensions that we know are already compressed
     private static final Set<String> COMPRESSED_EXTENSIONS = new HashSet<>(Arrays.asList(
         "zip", "gz", "gzip", "bz2", "bzip2", "tar.gz", "tgz", "tar.bz2", "tbz2",
         "7z", "rar", "jar", "war", "xz", "lzma", "lz", "z"
     ));
     
-    // Extensions supported by our compressor
+    // Only supporting these compression types for now
+    // TODO: Add support for 7z in a future version
     private static final Set<String> SUPPORTED_COMPRESS_EXTENSIONS = new HashSet<>(Arrays.asList(
         "zip", "gz", "bz2"
     ));
     
     /**
-     * Gets file information for the specified file.
-     * 
-     * @param file The file
-     * @return The file information
+     * Gets information about a file (size, type, etc)
      */
     public static FileInfo getFileInfo(File file) {
         if (file == null || !file.exists()) {
@@ -47,10 +45,7 @@ public class FileUtils {
     }
     
     /**
-     * Calculates the total size of a directory.
-     * 
-     * @param directory The directory
-     * @return The total size in bytes
+     * Adds up the size of all files in a directory
      */
     private static long calculateDirectorySize(File directory) {
         if (!directory.isDirectory()) {
@@ -73,12 +68,7 @@ public class FileUtils {
         return size;
     }
     
-    /**
-     * Gets the file type or extension.
-     * 
-     * @param file The file
-     * @return The file type
-     */
+    // Figure out if this is a directory or what kind of file it is
     public static String getFileType(File file) {
         if (file.isDirectory()) {
             return "Directory";
@@ -95,10 +85,7 @@ public class FileUtils {
     }
     
     /**
-     * Formats a file size in bytes to a human-readable string.
-     * 
-     * @param size The file size in bytes
-     * @return The formatted file size
+     * Converts bytes into human-readable sizes like "4.2 MB"
      */
     public static String formatFileSize(long size) {
         if (size <= 0) {
@@ -113,12 +100,7 @@ public class FileUtils {
         return df.format(size / Math.pow(1024, digitGroups)) + " " + units[digitGroups];
     }
     
-    /**
-     * Checks if a file is a compressed file based on its extension.
-     * 
-     * @param file The file to check
-     * @return true if the file is a compressed file, false otherwise
-     */
+    // Checks if a file is already compressed based on its extension
     public static boolean isCompressedFile(File file) {
         if (file == null || !file.isFile()) {
             return false;
@@ -137,12 +119,8 @@ public class FileUtils {
     }
     
     /**
-     * Checks if a file is compressible by our application.
-     * Some file formats are already highly compressed (images, videos, etc.)
-     * and don't benefit much from additional compression.
-     * 
-     * @param file The file to check
-     * @return true if the file is likely to benefit from compression
+     * Checks if we should compress this file
+     * Some files are already compressed and we'd just waste CPU time
      */
     public static boolean isCompressibleFile(File file) {
         if (file == null || !file.isFile()) {
@@ -152,6 +130,7 @@ public class FileUtils {
         String ext = getExtension(file).toLowerCase();
         
         // List of extensions that are typically already compressed
+        // Probably missing some, but these are the common ones
         Set<String> alreadyCompressedTypes = new HashSet<>(Arrays.asList(
             // Images
             "jpg", "jpeg", "png", "gif", "webp", "bmp", "tiff", "heic",
@@ -166,12 +145,7 @@ public class FileUtils {
         return !alreadyCompressedTypes.contains(ext);
     }
     
-    /**
-     * Gets the file extension without the dot.
-     * 
-     * @param file The file
-     * @return The extension or empty string if none
-     */
+    // Gets just the extension part of a filename
     public static String getExtension(File file) {
         String name = file.getName();
         int lastDotIndex = name.lastIndexOf('.');
@@ -184,11 +158,8 @@ public class FileUtils {
     }
     
     /**
-     * Determines if a compression algorithm is supported for the given file.
-     * 
-     * @param file The file to check
-     * @param algorithm The algorithm to check
-     * @return true if the file can be compressed with the algorithm
+     * Checks if we can use a particular algorithm on this file
+     * Currently only ZIP supports directories
      */
     public static boolean isSupportedForCompression(File file, CompressionAlgorithm algorithm) {
         // Directories can only be compressed with ZIP
@@ -199,12 +170,7 @@ public class FileUtils {
         return true;
     }
     
-    /**
-     * Determines the compression algorithm for a compressed file based on its extension.
-     * 
-     * @param file The compressed file
-     * @return The compression algorithm
-     */
+    // Figures out what algorithm to use for decompression based on the file extension
     public static CompressionAlgorithm determineAlgorithm(File file) {
         if (file == null || !file.isFile()) {
             return CompressionAlgorithm.ZIP;
@@ -225,10 +191,8 @@ public class FileUtils {
     }
     
     /**
-     * Gets the output path for decompression based on the compressed file name.
-     * 
-     * @param compressedFile The compressed file
-     * @return The output path
+     * Figures out where to put the decompressed file(s)
+     * This gets tricky with tar.gz and other double extensions
      */
     public static String getDecompressionOutputPath(File compressedFile) {
         if (compressedFile == null) {
