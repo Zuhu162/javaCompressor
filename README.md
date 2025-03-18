@@ -2,112 +2,100 @@
 
 A desktop application that allows users to compress and decompress files using various compression algorithms.
 
-## Functional Requirements
+![Java File Compressor](docs/images/screenshot.png)
 
-### Core Features
+## Features
 
-1. File Selection
+### Core Functionality
 
-   - Allow users to select files through a file picker dialog
-   - Support drag-and-drop functionality for files
-   - Display selected file information (name, size, type)
+- **Multiple Compression Algorithms:** ZIP, GZIP, and BZIP2 compression support
+- **Compression Level Control:** Adjust compression level (1-9) to balance speed and compression ratio
+- **File/Directory Support:** Compress single files or entire directories
+- **Progress Tracking:** Real-time progress updates during compression/decompression
+- **Drag and Drop:** Easy file selection via drag and drop interface
+- **Compression Statistics:** View size reduction and compression ratio data
 
-2. Compression Options
+### User Interface
 
-   - Support multiple compression algorithms:
-     - ZIP compression (default)
-     - GZIP compression
-     - BZIP2 compression
-   - Allow users to select compression level (1-9)
-   - Option to preserve original file structure
+- **Modern UI:** Clean, intuitive interface with clear sections
+- **Visual Feedback:** Progress bar and status updates
+- **File Information:** View details about selected files before compression
+- **Error Handling:** User-friendly error messages
 
-3. Compression Process
+## Installation Instructions
 
-   - Show compression progress
-   - Display compression ratio
-   - Allow cancellation of compression process
-   - Handle large files efficiently
-
-4. Decompression
-   - Support decompression of previously compressed files
-   - Maintain original file names and structure
-   - Validate compressed files before decompression
-
-### User Interface Requirements
-
-1. Main Window
-
-   - Clean, modern interface
-   - Intuitive layout with clear sections
-   - Dark/Light theme support
-
-2. Controls
-
-   - File selection button
-   - Compression algorithm selection dropdown
-   - Compression level slider
-   - Start/Stop compression buttons
-   - Progress bar
-   - Status messages
-
-3. Information Display
-   - File details panel
-   - Compression statistics
-   - Error messages and notifications
-
-## Technical Requirements
-
-### Development Environment
+### Prerequisites
 
 - Java Development Kit (JDK) 17 or higher
-- JavaFX for the user interface
-- Maven for project management
-- JUnit for testing
+- Maven (for building from source)
 
-### Dependencies
+### Running the Application
 
-- Apache Commons Compress for compression algorithms
-- SLF4J for logging
-- JUnit 5 for testing
+1. Download the latest release JAR file
+2. Run using: `java -jar java-file-compressor-1.0-SNAPSHOT.jar`
 
-### Performance Requirements
+### Building from Source
 
-- Handle files up to 2GB in size
-- Maximum memory usage of 512MB
-- Compression time should be reasonable (benchmark: 100MB file in < 30 seconds)
-- Responsive UI during compression operations
+```bash
+git clone https://github.com/yourusername/java-file-compressor.git
+cd java-file-compressor
+mvn clean package
+java -jar target/java-file-compressor-1.0-SNAPSHOT.jar
+```
 
-### Security Requirements
+## Technical Details
 
-- Validate file types before compression
-- Prevent malicious file operations
-- Secure file handling practices
-- No sensitive data exposure in logs
+### Technology Stack
 
-### Error Handling
+- **Java 17:** Core programming language
+- **JavaFX:** UI framework
+- **Apache Commons Compress:** Compression algorithms
+- **Maven:** Project management and build tool
+- **SLF4J/Logback:** Logging framework
 
-- Graceful handling of:
-  - Corrupted files
-  - Insufficient disk space
-  - File permission issues
-  - Invalid compression formats
-  - Memory constraints
+### Architecture
+
+The application is built using a clean separation of concerns:
+
+- **Model:** Data structures for file information and compression parameters
+- **View:** JavaFX FXML-based UI components
+- **Controller:** Business logic for handling user interactions
+- **Service:** Compression/decompression operations
+
+### Compression Algorithms
+
+- **ZIP:** Standard compression format with good compatibility
+- **GZIP:** Fast compression with good compression ratio
+- **BZIP2:** Higher compression ratio but slower than GZIP
+
+## Usage Examples
+
+### Compressing a File
+
+1. Click "Select File" or drag and drop a file onto the application
+2. Choose compression algorithm (ZIP, GZIP, BZIP2)
+3. Adjust compression level (1-9)
+4. Click "Compress"
+
+### Decompressing a File
+
+1. Select a compressed file (.zip, .gz, .bz2)
+2. Click "Decompress"
 
 ## Future Enhancements
 
-1. Batch processing of multiple files
-2. Custom compression algorithm support
-3. File encryption during compression
-4. Cloud storage integration
-5. Compression history and favorites
-6. Scheduled compression tasks
+1. Support for more compression algorithms
+2. Batch processing multiple files
+3. Password protection for compressed files
+4. Command-line interface
+5. Dark mode UI
 
-## Development Phases
+## License
 
-1. Basic UI implementation
-2. Core compression functionality
-3. Progress tracking and cancellation
-4. Error handling and validation
-5. Performance optimization
-6. Testing and bug fixes
-7. Documentation and user guide
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Acknowledgments
+
+- Apache Commons Compress for providing compression algorithms
+- JavaFX for the UI framework
+- The open source community for their valuable resources
