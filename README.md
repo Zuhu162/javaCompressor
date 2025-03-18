@@ -1,12 +1,12 @@
 # Java File Compressor
 
-A desktop application that allows users to compress and decompress files using various compression algorithms.
+A desktop app I built to compress and decompress files with various algorithms. Super simple to use!
 
 ![Java File Compressor](docs/images/screenshot.png)
 
-## Features
+## What it does
 
-### Core Functionality
+### Core Features
 
 - **Multiple Algorithms:** Supports ZIP, GZIP, and BZIP2
 - **Compression Control:** Adjust levels (1-9) for speed vs. size tradeoffs
@@ -83,15 +83,22 @@ The app uses a pretty standard architecture:
 2. Click "Decompress"
 3. That's it!
 
-## Planned Improvements
+## What I Learned
 
-Things I'm planning to add:
+This project taught me a ton about:
 
-1. Support for 7z and other formats
-2. Batch processing multiple files at once
-3. Password protection for your files
-4. Command-line version for scripts
-5. Dark mode (because everything needs dark mode!)
+- **Java File Handling:** Working with the File API, recursively processing directories, and handling various file types
+- **Stream Processing:** Using Java's input/output streams with buffering for efficient file operations
+- **Compression Algorithms:** Understanding the tradeoffs between different compression methods:
+  - Dictionary-based vs statistical modeling approaches
+  - How compression levels affect memory usage and CPU requirements
+  - When to choose specific algorithms based on file content type
+- **JavaFX:** Building responsive UIs with background tasks that don't freeze the interface
+- **Error Handling:** Gracefully managing file access permissions, disk space issues, and corrupted archives
+- **Progress Tracking:** Calculating and displaying accurate progress for lengthy operations
+- **Drag & Drop:** Implementing intuitive user interactions using Java's DnD API
+
+The trickiest parts were calculating accurate file sizes for nested directories and maintaining a responsive UI during long compression tasks. Had to learn about Platform.runLater() and Task classes in JavaFX to keep everything smooth!
 
 ## License
 
