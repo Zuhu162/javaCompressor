@@ -19,7 +19,8 @@ public class FileUtils {
     
     // Set of common compressed file extensions
     private static final Set<String> COMPRESSED_EXTENSIONS = new HashSet<>(Arrays.asList(
-        "zip", "gz", "gzip", "bz2", "bzip2", "tar.gz", "tgz", "tar.bz2", "tbz2"
+        "zip", "gz", "gzip", "bz2", "bzip2", "tar.gz", "tgz", "tar.bz2", "tbz2", 
+        "7z", "rar", "xz", "lzma", "lz", "lzo", "z", "arj", "cab", "jar"
     ));
     
     /**
@@ -99,7 +100,7 @@ public class FileUtils {
             return "0 B";
         }
         
-        final String[] units = {"B", "KB", "MB", "GB", "TB"};
+        final String[] units = {"B", "KB", "MB", "GB", "TB", "PB", "EB"};
         int digitGroups = (int) (Math.log10(size) / Math.log10(1024));
         digitGroups = Math.min(digitGroups, units.length - 1);
         
@@ -143,7 +144,7 @@ public class FileUtils {
         
         String name = file.getName().toLowerCase();
         
-        if (name.endsWith(".zip")) {
+        if (name.endsWith(".zip") || name.endsWith(".jar")) {
             return CompressionAlgorithm.ZIP;
         } else if (name.endsWith(".gz") || name.endsWith(".gzip") || name.endsWith(".tgz") || name.endsWith(".tar.gz")) {
             return CompressionAlgorithm.GZIP;
@@ -171,8 +172,8 @@ public class FileUtils {
         String baseName = fileName;
         
         // Handle different compression formats
-        if (fileName.toLowerCase().endsWith(".zip")) {
-            baseName = fileName.substring(0, fileName.length() - 4);
+        if (fileName.toLowerCase().endsWith(".zip") || fileName.toLowerCase().endsWith(".jar")) {
+            baseName = fileName.substring(0, fileName.lastIndexOf('.'));
         } else if (fileName.toLowerCase().endsWith(".gz") || fileName.toLowerCase().endsWith(".gzip")) {
             baseName = fileName.substring(0, fileName.lastIndexOf('.'));
         } else if (fileName.toLowerCase().endsWith(".bz2") || fileName.toLowerCase().endsWith(".bzip2")) {
@@ -190,7 +191,7 @@ public class FileUtils {
         }
         
         // If it's a ZIP file, we'll decompress to a directory
-        if (fileName.toLowerCase().endsWith(".zip")) {
+        if (fileName.toLowerCase().endsWith(".zip") || fileName.toLowerCase().endsWith(".jar")) {
             return (parentPath != null ? parentPath + File.separator : "") + baseName;
         } else {
             // For GZIP and BZIP2, we'll decompress to a file
